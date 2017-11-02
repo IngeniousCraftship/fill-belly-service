@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2017-10-04 15:00" author="sriharishk">
+        <createTable tableName="customers">
+            <column name="id" type="long" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="firstName" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastName" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phoneNumber" type="long">
+                <constraints nullable="true"/>
+            </column>
+            <column name="houseNumber" type="long">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="order_lines">
+            <column name="orderLineId" type="long" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="orderNumber" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="itemName" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unitPrice" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lineTotal" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="orders">
+            <column name="orderId" type="long" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="orderNumber" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="orderTotal" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderCreationDate" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderPickUpDateTime" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="firstName" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="customers" columnNames="email"
+                             constraintName="uq_email_in_customers"/>
+        <addUniqueConstraint tableName="orders" columnNames="orderNumber" constraintName="uq_order_number_in_orders"/>
+        <addUniqueConstraint tableName="orders" columnNames="orderNumber,email"
+                             constraintName="uq_order_number_email_in_orders"/>
+    </changeSet>
+
+</databaseChangeLog>
